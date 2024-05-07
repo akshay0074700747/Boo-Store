@@ -1,0 +1,34 @@
+{
+    "users":[
+        {
+            "username":"akshay007",
+            "name":"Akshay",
+            "password":"ak124*KK",
+            "is_admin":false
+        },
+        {
+            "username":"jack124",
+            "name":"Jack",
+            "password":"jK879#21",
+            "is_admin":false
+        },
+        {
+            "username":"dominic487",
+            "name":"Dominic",
+            "password":"dk784$rT",
+            "is_admin":false
+        },
+        {
+            "username":"loki78452",
+            "name":"Loki",
+            "password":"lk09$FGR",
+            "is_admin":true
+        },
+        {
+            "username":"bruce85236",
+            "name":"Bruce",
+            "password":"bC78@123",
+            "is_admin":true
+        }
+    ]
+}
