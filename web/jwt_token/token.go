@@ -8,38 +8,36 @@ import (
 )
 
 type payload struct {
-	userName  string
-	isAdmin bool
+	UserName string `json:"userName"`
+	IsAdmin  bool   `json:"isAdmin"`
 	jwt.StandardClaims
 }
 
-func GenerateJwt(user_name string, is_admin bool, secret []byte) (string, error) {
-
-	expiresat := time.Now().Add(48 * time.Hour)
-
-	jwtclaims := &payload{
-		userName:  user_name,
-		isAdmin: is_admin,
+// generating jwt token from the given credentials
+func GenerateJwt(userName string, isAdmin bool, secret []byte) (string, error) {
+	expiresAt := time.Now().Add(48 * time.Hour)
+	jwtClaims := &payload{
+		UserName: userName,
+		IsAdmin:  isAdmin,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expiresat.Unix(),
+			ExpiresAt: expiresAt.Unix(),
 		},
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwtclaims)
-
-	tokenstring, err := token.SignedString(secret)
-
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwtClaims)
+	tokenString, err := token.SignedString(secret)
 	if err != nil {
 		return "", err
 	}
 
-	return tokenstring, nil
-
+	fmt.Println(tokenString)
+	return tokenString, nil
 }
 
+// validating the token
 func ValidateToken(tokenstring string, secret []byte) (map[string]interface{}, error) {
 
-	token, err := jwt.ParseWithClaims(tokenstring, &Payload{}, func(t *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenstring, &payload{}, func(t *jwt.Token) (interface{}, error) {
 
 		if t.Method != jwt.SigningMethodHS256 {
 			return nil, fmt.Errorf("invalid token")
@@ -57,15 +55,15 @@ func ValidateToken(tokenstring string, secret []byte) (map[string]interface{}, e
 		return nil, fmt.Errorf("token is not valid or its empty")
 	}
 
-	cliams, ok := token.Claims.(*Payload)
+	cliams, ok := token.Claims.(*payload)
 
 	if !ok {
 		return nil, fmt.Errorf("cannot parse claims")
 	}
 
 	cred := map[string]interface{}{
-		"userID":  cliams.UserID,
-		"isadmin": cliams.Isadmin,
+		"userName": cliams.UserName,
+		"isAdmin":  cliams.IsAdmin,
 	}
 
 	if cliams.ExpiresAt < time.Now().Unix() {

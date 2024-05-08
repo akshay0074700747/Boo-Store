@@ -9,11 +9,16 @@ import (
 
 func main() {
 
+	//loading the configurations from the env
 	configs, err := configurations.LoadConfigurationss()
 	if err != nil {
-		log.Fatalf("fatal error %s happend, exiting...", err.Error())
+		log.Fatalf("fatal error %s , exiting...", err.Error())
 	}
 
+	//this application in built in clean architecture
+	//this function is initialising all the dependencies
 	controller := dependencyinjection.InjectDependencies(configs)
+
+	//starting up the server in the specified port
 	controller.Start(configs.Port)
 }

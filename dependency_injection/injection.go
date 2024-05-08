@@ -6,6 +6,7 @@ import (
 	usecaseadapters "github.com/akshay0074700747/book_store/usecase/usecase_adapters"
 	"github.com/akshay0074700747/book_store/web/controllers"
 	"github.com/akshay0074700747/book_store/web/handlers"
+	"github.com/akshay0074700747/book_store/web/middlewares"
 )
 
 func InjectDependencies(cfg configurations.Configurations) *controllers.BookStoreController {
@@ -13,5 +14,6 @@ func InjectDependencies(cfg configurations.Configurations) *controllers.BookStor
 	repo := repositoryadapters.NewRepositoryAdapter(cfg)
 	usecase := usecaseadapters.NewUsecaseAdapter(repo)
 	handlers := handlers.NewHandler(usecase, cfg.Secret)
-	return controllers.NewBookStoreController(handlers)
+	middleware := middlewares.NewMiddleware(cfg.Secret)
+	return controllers.NewBookStoreController(handlers, middleware)
 }

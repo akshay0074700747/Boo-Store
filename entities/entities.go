@@ -6,3 +6,9 @@ type User struct {
 	Password string `json:"password,omitempty"`
 	IsAdmin  bool   `json:"is_admin,omitempty"`
 }
+
+type Book struct {
+	BookName        string `json:"bookName,omitempty"`
+	Author          string `json:"author,omitempty"`
+	PublicationYear int   `json:"publicationYear,omitempty"`
+}
