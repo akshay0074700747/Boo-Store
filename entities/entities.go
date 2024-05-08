@@ -1,8 +1,8 @@
 package entities
 
 type User struct {
-	Username string `json:"username"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	IsAdmin  bool   `json:"is_admin"`
+	Username string `json:"username,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Password string `json:"password,omitempty"`
+	IsAdmin  bool   `json:"is_admin,omitempty"`
 }

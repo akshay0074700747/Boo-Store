@@ -11,13 +11,13 @@ type BookStoreController struct {
 	controllers *gin.Engine
 }
 
-func NewBookStoreController(userHandler *handlers.UserHandler, booksHandler *handlers.BookHandlers) *BookStoreController {
+func NewBookStoreController(handlers *handlers.Handler) *BookStoreController {
 
 	engine := gin.New()
 
 	engine.Use(gin.Logger())
 
-	engine.POST("/user/login", userhandler.UserLogin)
+	engine.POST("/user/login", handlers.Login)
 
 	return &BookStoreController{
 		controllers: engine,
